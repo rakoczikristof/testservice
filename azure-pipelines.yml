@@ -40,7 +40,7 @@ stages:
         command: buildAndPush
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
+        containerRegistry: $(acrServiceConnection)
         tags: |
           $(tag)
     - task: PublishBuildArtifacts@1
