@@ -6,6 +6,7 @@ resources:
 
 variables:
   # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: $(dockerRegistryServiceConnection)
   imageRepository: 'testservice'
   containerRegistry: 'testacrregistry404q.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
@@ -40,7 +41,7 @@ stages:
         command: buildAndPush
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
-        containerRegistry: $(acrServiceConnection)
+        containerRegistry: $(containerRegistry)
         tags: |
           $(tag)
     - task: PublishBuildArtifacts@1
