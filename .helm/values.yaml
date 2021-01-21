@@ -1,0 +1,59 @@
+# The overall system your service is a part of
+system: system
+# The name of your service
+service: testservice
+# The major version number for your service
+version: 1
+
+# Docker settings
+image:
+  # The name of your docker container
+  repository: testacrregistry404q.azurecr.io
+  # Your docker container's tag will be
+  folder: k8s
+  version: latest
+  imagePullPolicy: IfNotPresent
+
+# The number of pod replicas to run for your service
+replicaCount: 1
+
+# Port settings
+# Ports must be named <protocol>[-<suffix>] to work with Istio.
+# Valid protocols are grpc, http, http2, https, mongo, mysql, redis, tcp, tls, udp
+ports:
+  - name: http-status
+    port: 80
+    targetPort: 80
+
+# When enabled, configure the Istio ingress gateway to route outside traffic for the provided
+# host name to this service on the ports and protocols defined in the 'ports' section 
+# above. 
+ingressGateway:
+  enabled: true
+  name: default/ingress-gateway
+  host: "*"
+  matchPrefix: 
+    - "/testservice/"
+    - "/testservice"
+
+configMap:
+  # Where the config map should be mounted inside your container's filesystem.
+  mountPath: /config/${service}-config
+  fileName: config.yaml
+  # Everything under content is copied verbatim into your service's configmap.
+  content:
+    key1: value1
+    key2: value2
+
+# Probe settings (use Kubernetes syntax)
+probes:
+  livenessProbe:
+    initialDelaySeconds: 30
+    httpGet:
+      path: /actuator/health/liveness
+      port: 80
+  readinessProbe:
+    timeoutSeconds: 10
+    httpGet:
+      path: /actuator/health/readiness
+      port: 80
