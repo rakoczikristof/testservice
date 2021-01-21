@@ -48,9 +48,3 @@ stages:
         PathtoPublish: '$(Build.SourcesDirectory)/.helm'
         ArtifactName: 'drop'
         publishLocation: 'Container'
-
-- task: Docker@2
-  inputs:
-    containerRegistry: 'testacrregistry404q'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
