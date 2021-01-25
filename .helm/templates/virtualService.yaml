@@ -40,8 +40,6 @@ spec:
       - uri:
           prefix: {{ . | quote }}
 {{- end }}
-      rewrite:
-        uri: "/"
       route:
       - destination:
           host: {{ (print .Values.service "." .Release.Namespace ".svc.cluster.local") | quote }}

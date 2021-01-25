@@ -10,8 +10,9 @@ image:
   # The name of your docker container
   repository: testacrregistry404q.azurecr.io
   # Your docker container's tag will be
-  folder: k8s
-  version: latest
+  # <environment>/qatarairways/<service> Example: test/epamcom/user-profile-service
+  folder: test/epamcom
+  version: dev.0
   imagePullPolicy: IfNotPresent
 
 # The number of pod replicas to run for your service
@@ -21,9 +22,12 @@ replicaCount: 1
 # Ports must be named <protocol>[-<suffix>] to work with Istio.
 # Valid protocols are grpc, http, http2, https, mongo, mysql, redis, tcp, tls, udp
 ports:
+  - name: http-app
+    port: 8080
+    targetPort: 8080
   - name: http-status
-    port: 80
-    targetPort: 80
+  port: 8081
+  targetPort: 8081
 
 # When enabled, configure the Istio ingress gateway to route outside traffic for the provided
 # host name to this service on the ports and protocols defined in the 'ports' section 
@@ -33,8 +37,7 @@ ingressGateway:
   name: default/ingress-gateway
   host: "*"
   matchPrefix: 
-    - "/testservice/"
-    - "/testservice"
+    - "/"
 
 configMap:
   # Where the config map should be mounted inside your container's filesystem.
@@ -48,12 +51,12 @@ configMap:
 # Probe settings (use Kubernetes syntax)
 probes:
   livenessProbe:
-    initialDelaySeconds: 30
+    initialDelaySeconds: 50
     httpGet:
       path: /actuator/health/liveness
-      port: 80
+      port: 8081
   readinessProbe:
     timeoutSeconds: 10
     httpGet:
       path: /actuator/health/readiness
-      port: 80
+      port: 8081
