@@ -8,10 +8,10 @@ resources:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '307bc2f2-bcea-4284-9c3b-d3620d270fd7'
-  imageRepository: 'testservice'
+  imageRepository: 'test/epamcom/testservice'
   containerRegistry: 'testacrregistry404q.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
-  tag: '$(Build.BuildId)'
+  tag: 'testservice:$(Build.BuildId)'
   
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
