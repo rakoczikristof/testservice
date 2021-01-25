@@ -11,7 +11,7 @@ variables:
   imageRepository: 'test/epamcom/testservice'
   containerRegistry: 'testacrregistry404q.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
-  tag: 'testservice:$(Build.BuildId)'
+  tag: '$(Build.BuildId)'
   
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
