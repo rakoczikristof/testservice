@@ -13,7 +13,7 @@ image:
   # <environment>/qatarairways/<service> Example: test/epamcom/user-profile-service
   folder: test/epamcom
   version: latest
-  imagePullPolicy: IfNotPresent
+  imagePullPolicy: Always
 
 # The number of pod replicas to run for your service
 replicaCount: 1
