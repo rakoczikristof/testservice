@@ -12,7 +12,7 @@ image:
   # Your docker container's tag will be
   # <environment>/qatarairways/<service> Example: test/epamcom/user-profile-service
   folder: test/epamcom
-  version: dev.0
+  version: latest
   imagePullPolicy: IfNotPresent
 
 # The number of pod replicas to run for your service
