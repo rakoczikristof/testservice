@@ -12,6 +12,7 @@ variables:
   containerRegistry: 'testacrregistry404q.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
+  serviceName: '$(Build.Repository.Name)'
   
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -25,6 +26,8 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
+    - bash: |
+        echo 'Servicename $(serviceName)'
     - task: Maven@3
       inputs:
         mavenPomFile: 'pom.xml'
