@@ -5,6 +5,7 @@ trigger:
 resources:
 - repo: self
 
+
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '307bc2f2-bcea-4284-9c3b-d3620d270fd7'
@@ -13,6 +14,7 @@ variables:
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
   serviceName: '$(Build.Repository.Name)'
+  editMe: ""
   
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -25,23 +27,29 @@ stages:
     displayName: Build
     variables:
       szar: "initial-value"
-      counterSzar: 999
+      counterSzar: $[counter(variables['szar'], 0)]
+      result: $[variables['szar']].$[variables['counterSzar']]
     pool:
       vmImage: $(vmImageName)
     steps:
     - bash: |
         echo 'Servicename $(serviceName)'
+        echo $(result)
 
         echo 'initial value of szar: $(szar)'
         echo 'Editing szar within the script....'
 
         echo "##vso[task.setvariable variable=szar]edited value"
-        echo "##vso[task.setvariable variable=counterSzar]$[counter('szar', 0)]"
+        echo "##vso[task.setvariable variable=editMe]ewditme-valeuleurleurleurlu"
 
         echo 'new value of szar within script: $(szar)'
     - bash: |
         echo 'value of szar within second scirpt: $(szar)'
         echo 'value of counter: $(counterSzar)'
+  - job: Valami
+    variables: 
+      testCounter: $[counter(variables['editMe'], 0)]
+    steps:
     - task: Maven@3
       inputs:
         mavenPomFile: 'pom.xml'
