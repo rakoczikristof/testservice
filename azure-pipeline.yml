@@ -23,11 +23,22 @@ stages:
   jobs:  
   - job: Build
     displayName: Build
+    variables:
+      szar: "initial-value"
     pool:
       vmImage: $(vmImageName)
     steps:
     - bash: |
         echo 'Servicename $(serviceName)'
+
+        echo 'initial value of szar: $(szar)'
+        echo 'Editing szar within the script....'
+
+        echo "##vso[task.setvariable variable=szar]edited value"
+
+        echo 'new value of szar within script: $(szar)'
+    - bash: |
+        echo 'value of szar within second scirpt: $(szar)'
     - task: Maven@3
       inputs:
         mavenPomFile: 'pom.xml'
