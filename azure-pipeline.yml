@@ -28,28 +28,27 @@ stages:
     variables:
       szar: "initial-value"
       counterSzar: $[counter(variables['szar'], 0)]
-      result: $[variables['szar']].$[variables['counterSzar']]
     pool:
       vmImage: $(vmImageName)
     steps:
     - bash: |
         echo 'Servicename $(serviceName)'
-        echo $(result)
 
         echo 'initial value of szar: $(szar)'
         echo 'Editing szar within the script....'
 
         echo "##vso[task.setvariable variable=szar]edited value"
-        echo "##vso[task.setvariable variable=editMe]ewditme-valeuleurleurleurlu"
+        echo "##vso[task.setvariable variable=editMe;isOutput=true]ewditme-valeuleurleurleurlu"
 
         echo 'new value of szar within script: $(szar)'
     - bash: |
         echo 'value of szar within second scirpt: $(szar)'
+        echo 'editme: $(editMe)'
         echo 'value of counter: $(counterSzar)'
   - job: Valami
-    variables: 
-      testCounter: $[counter(variables['editMe'], 0)]
     steps:
+    - bash: |
+        echo 'editme after: $(editMe)'
     - task: Maven@3
       inputs:
         mavenPomFile: 'pom.xml'
