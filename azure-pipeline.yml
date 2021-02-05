@@ -49,6 +49,7 @@ stages:
         echo 'editme: $(editMe)'
         echo 'value of counter: $(counterSzar)'
   - job: Valami
+    dependsOn: Build
     steps:
     - bash: |
         echo 'editme after: $(editMe)'
