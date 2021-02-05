@@ -40,8 +40,11 @@ stages:
         echo "##vso[task.setvariable variable=szar]edited value"
         echo "##vso[task.setvariable variable=editMe;isOutput=true]ewditme-valeuleurleurleurlu"
 
+        echo 'coutnerszar: $(counterSzar)
         echo 'new value of szar within script: $(szar)'
+        echo "##vso[task.setvariable variable=counterSzar]ewditme-valeuleurleurleurlu"
     - bash: |
+        echo 'coutnerszar: $(counterSzar)'
         echo 'value of szar within second scirpt: $(szar)'
         echo 'editme: $(editMe)'
         echo 'value of counter: $(counterSzar)'
