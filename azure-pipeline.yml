@@ -25,6 +25,7 @@ stages:
     displayName: Build
     variables:
       szar: "initial-value"
+      counterSzar: 999
     pool:
       vmImage: $(vmImageName)
     steps:
@@ -35,10 +36,12 @@ stages:
         echo 'Editing szar within the script....'
 
         echo "##vso[task.setvariable variable=szar]edited value"
+        echo "##vso[task.setvariable variable=counterSzar]$[counter("szar", 0)]"
 
         echo 'new value of szar within script: $(szar)'
     - bash: |
         echo 'value of szar within second scirpt: $(szar)'
+        echo 'value of counter: $(counterSzar)'
     - task: Maven@3
       inputs:
         mavenPomFile: 'pom.xml'
